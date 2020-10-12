@@ -1,6 +1,7 @@
 package verlog
 
 import (
+	"io"
 	"log"
 	"os"
 )
@@ -15,6 +16,14 @@ type Logger struct {
 func New(verboseLevel int) *Logger {
 	return &Logger{
 		Logger: log.New(os.Stdout, "", log.LstdFlags),
+		vl:     verboseLevel,
+	}
+}
+
+// New creates a new Logger with verbose level and set the out. Smaller level - less output.
+func NewWithWriter(verboseLevel int, out io.Writer) *Logger {
+	return &Logger{
+		Logger: log.New(out, "", log.LstdFlags),
 		vl:     verboseLevel,
 	}
 }
